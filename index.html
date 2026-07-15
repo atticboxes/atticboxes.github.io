@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composer Profile & Portfolio</title>
+    <style>
+        /* --- Design System & Variables (Obsidian Black, Deep Forest Green, Royal Blue & Amber Yellow) --- */
+        :root {
+            --bg-color: #020403;          /* Pure Obsidian Black */
+            --card-bg: #07120a;           /* Deep Forest/Emerald Dark Green */
+            --text-main: #f1f5f9;         /* Crisp Off-White */
+            --text-muted: #788a80;        /* Muted Green-Gray */
+            --accent-blue: #0066ff;       /* Saturated Deep Royal Blue */
+            --accent-yellow: #ffb700;     /* Warm Amber Yellow */
+            --border-color: #112417;      /* Dark Forest Green Border */
+            --card-hover-border: rgba(255, 183, 0, 0.35); /* Warm yellow glow */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(2, 4, 3, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: var(--accent-yellow);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 20px 40px 20px; /* Top padding accommodates sticky nav */
+        }
+
+        /* --- Animated Header with Musical Notes --- */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 60px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(7, 18, 10, 0.8) 0%, rgba(2, 4, 3, 0) 100%);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 15px rgba(0, 102, 255, 0.4);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--accent-yellow);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Music Notes Floating Animation */
+        .note {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp 8s infinite linear;
+            z-index: 1;
+        }
+
+        .note:nth-child(1) { left: 12%; animation-delay: 0s; font-size: 28px; color: rgba(0, 102, 255, 0.25); }
+        .note:nth-child(2) { left: 28%; animation-delay: 2s; font-size: 20px; animation-duration: 9s; color: rgba(255, 183, 0, 0.2); }
+        .note:nth-child(3) { left: 45%; animation-delay: 4.5s; font-size: 32px; animation-duration: 7s; color: rgba(0, 102, 255, 0.25); }
+        .note:nth-child(4) { left: 62%; animation-delay: 1s; font-size: 22px; animation-duration: 10s; color: rgba(255, 183, 0, 0.2); }
+        .note:nth-child(5) { left: 78%; animation-delay: 3s; font-size: 26px; animation-duration: 8s; color: rgba(0, 102, 255, 0.25); }
+        .note:nth-child(6) { left: 90%; animation-delay: 5.5s; font-size: 18px; animation-duration: 11s; color: rgba(255, 183, 0, 0.2); }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-180px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* --- Sections --- */
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 100px; /* Offset for navigation bar when jumping */
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-yellow);
+        }
+
+        /* --- Introduction & Services --- */
+        .intro-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+            margin-bottom: 40px;
+        }
+
+        .intro-content p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .intro-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Services Grid (Static, no hover triggers) */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .service-card {
+            background: rgba(7, 18, 10, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Media Grids --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 183, 0, 0.1);
+            border-color: var(--card-hover-border);
+        }
+
+        /* Video Wrapper for Responsive 16:9 Aspect Ratio */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Audio Wrapper */
+        .audio-container {
+            padding: 0;
+            background: #000;
+        }
+
+        .audio-container iframe {
+            width: 100%;
+            display: block;
+            border: 0;
+        }
+
+        /* Genre Tags Styling */
+        .tag-wrapper {
+            padding: 20px 25px 12px 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .genre-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-yellow);
+            background: rgba(255, 183, 0, 0.08);
+            border: 1px solid rgba(255, 183, 0, 0.25);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .item-details {
+            padding: 25px;
+        }
+
+        .item-details h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .item-details p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* --- Miscellaneous Links Section --- */
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .links-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .link-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.15);
+        }
+
+        .link-card h4 {
+            color: var(--accent-yellow);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .link-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-yellow);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">PORTFOLIO</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#video-rescores">Videos</a></li>
+                <li><a href="#audio-tracks">Audio</a></li>
+                <li><a href="#miscellaneous-links">Links</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Header with Animated Floating Music Notes -->
+        <header>
+            <div class="note">♩</div>
+            <div class="note">♪</div>
+            <div class="note">♫</div>
+            <div class="note">♬</div>
+            <div class="note">♩</div>
+            <div class="note">♪</div>
+            
+            <h1>Your Name</h1>
+            <p>Composer & Sound Designer</p>
+        </header>
+
+        <!-- Self-Introduction Section -->
+        <section id="about">
+            <h2>Introduction</h2>
+            <div class="intro-content">
+                <p>Welcome to my sonic portfolio. I am a composer specializing in creating immersive, emotionally driven scores for film, television, and interactive media.</p>
+                <p>My work bridges the gap between traditional orchestration and modern electronic soundscapes. Explore my recent video rescores and standalone audio productions below to hear how I bring visual stories to life through sound.</p>
+            </div>
+
+            <!-- Static Specialties Matrix -->
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎻</div>
+                    <h3>Film Scoring</h3>
+                    <p>Tailored emotional orchestration to elevate visual storytelling, from intimate acoustic scenes to sweeping, hybrid epic action cues.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎹</div>
+                    <h3>Sound Design</h3>
+                    <p>Granular synthesis, field recordings, and unique foley crafted to build atmospheric, immersive, and distinct environmental textures.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👾</div>
+                    <h3>Game Audio</h3>
+                    <p>Adaptive musical systems and looping themes built specifically for interactive mechanics and deep player immersion.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- YouTube Rescores Section -->
+        <section id="video-rescores">
+            <h2>Video Rescores</h2>
+            <div class="portfolio-grid">
+                
+                <!-- Video Item 1 -->
+                <div class="portfolio-item">
+                    <div class="video-container">
+                        <!-- REPLACE THE URL BELOW WITH YOUR YOUTUBE EMBED URL -->
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    </div>
+                    <div class="item-details">
+                        <h3>Sci-Fi Cinematic Scene Rescore</h3>
+                        <p>A complete redesign of a pivotal cinematic sequence. For this project, I utilized heavy analog synthesizers layered over a live string ensemble to heighten the tension and sense of scale.</p>
+                    </div>
+                </div>
+
+                <!-- Video Item 2 -->
+                <div class="portfolio-item">
+                    <div class="video-container">
+                        <!-- REPLACE THE URL BELOW WITH YOUR YOUTUBE EMBED URL -->
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    </div>
+                    <div class="item-details">
+                        <h3>Period Drama Intimate Cue</h3>
+                        <p>Focusing on a minimalist approach, this rescore utilizes a solo felt piano and delicate woodwinds to convey the unspoken emotional undercurrents between the two lead characters.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SoundCloud Audio Section -->
+        <section id="audio-tracks">
+            <h2>Audio Portfolio</h2>
+            <div class="portfolio-grid">
+                
+                <!-- Audio Item 1 -->
+                <div class="portfolio-item">
+                    <!-- Genre Tag Container on top of Embed -->
+                    <div class="tag-wrapper">
+                        <span class="genre-tag">Orchestral</span>
+                        <span class="genre-tag">Fantasy</span>
+                        <span class="genre-tag">Cinematic</span>
+                    </div>
+                    <div class="audio-container">
+                        <!-- 'color=%23ffb700' matches the custom gold/yellow theme color -->
+                        <iframe height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/297442651&color=%23ffb700&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+                    </div>
+                    <div class="item-details">
+                        <h3>Orchestral Theme - "Rising Embers"</h3>
+                        <p>An epic, sweeping main theme designed for a fantasy adventure suite. Recorded with a full brass section, it emphasizes heroic themes and dramatic rhythmic shifts.</p>
+                    </div>
+                </div>
+
+                <!-- Audio Item 2 -->
+                <div class="portfolio-item">
+                    <!-- Genre Tag Container on top of Embed -->
+                    <div class="tag-wrapper">
+                        <span class="genre-tag">Ambient</span>
+                        <span class="genre-tag">Electronic</span>
+                        <span class="genre-tag">Darkscape</span>
+                    </div>
+                    <div class="audio-container">
+                        <!-- 'color=%23ffb700' matches the custom gold/yellow theme color -->
+                        <iframe height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/297442651&color=%23ffb700&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
+                    </div>
+                    <div class="item-details">
+                        <h3>Ambient Soundscape - "Echoes of the Deep"</h3>
+                        <p>An experimental, dark ambient piece created entirely out of heavily processed hydrophone recordings and granular synthesis. Perfect for tense, atmospheric thriller settings.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Miscellaneous/External Links Section -->
+        <section id="miscellaneous-links">
+            <h2>Explore More</h2>
+            <div class="links-grid">
+                
+                <!-- Link 1 -->
+                <a href="https://imdb.com" target="_blank" class="link-card">
+                    <h4>IMDb Profile</h4>
+                    <p>View official filmography & credits</p>
+                </a>
+
+                <!-- Link 2 -->
+                <a href="https://bandcamp.com" target="_blank" class="link-card">
+                    <h4>Bandcamp</h4>
+                    <p>Listen to & purchase full soundtracks</p>
+                </a>
+
+                <!-- Link 3 -->
+                <a href="https://linkedin.com" target="_blank" class="link-card">
+                    <h4>LinkedIn</h4>
+                    <p>Connect for professional inquiries</p>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Your Name. All rights reserved. | Contact: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
